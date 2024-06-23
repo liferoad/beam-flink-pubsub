@@ -55,7 +55,8 @@ public class App {
     }
 
     public static void main(String[] args) {
-        ReadTopicPubSubOptions options = PipelineOptionsFactory.fromArgs(args).withValidation().as(ReadTopicPubSubOptions.class);
+        ReadTopicPubSubOptions options = PipelineOptionsFactory.fromArgs(args).
+                withValidation().as(ReadTopicPubSubOptions.class);
         Pipeline pipeline = Pipeline.create(options);
         App.buildPipeline(pipeline, options.getTopic());
         pipeline.run();
