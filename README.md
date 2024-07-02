@@ -26,7 +26,7 @@ gcloud pubsub topics create my-test-topic
 gcloud pubsub topics publish my-test-topic --message="hello"
 
 # test it with FlinkRunner
-mvn compile exec:java -Dexec.args="--runner='FlinkRunner'  --filesToStage=target/beam-flink-pubsub-1-jar-with-dependencies.jar --topic=projects/manav-jit-test/topics/my-test-topic" 
+mvn compile exec:java -Dexec.args="--runner='FlinkRunner'  --filesToStage=target/beam-flink-pubsub-1-jar-with-dependencies.jar --topic=projects/manav-jit-test/topics/my-test-topic --checkpointingInterval=1000" 
 
 # test it with DirectRunner
 mvn compile exec:java -Dexec.args="--runner='DirectRunner' --topic=projects/manav-jit-test/topics/my-test-topic"
