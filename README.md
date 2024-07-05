@@ -1,5 +1,7 @@
 # Simple Java Test for Pub/Sub
 
+Use Java 11.
+
 ## Test with `DirectRunner`
 ```bash
 mvn compile exec:java -Dexec.args=--runner='DirectRunner'
@@ -33,6 +35,34 @@ mvn compile exec:java -Dexec.args="--runner='DirectRunner' --topic=projects/mana
 
 # delete topic
 gcloud pubsub topics delete my-test-topic
+```
+
+## Test Message Script
+
+```bash
+#!/bin/bash
+
+# Ensure 'gcloud' is installed and configured
+if ! command -v gcloud &> /dev/null; then
+    echo "gcloud command not found. Please install the Google Cloud SDK."
+    exit 1
+fi
+
+TOPIC_NAME="my-test-topic"  # Replace with your actual topic name
+MESSAGE_COUNT=100
+
+for ((i=1; i<=$MESSAGE_COUNT; i++)); do
+    # Construct message with counter
+    MESSAGE="hello $i"
+
+    # Publish message
+    gcloud pubsub topics publish "$TOPIC_NAME" --message="$MESSAGE"
+
+    # Random delay between 0 and 1 second
+    sleep $((RANDOM % 1000 + 1)) / 1000  # Sleep in milliseconds (0 to 999)
+done
+
+echo "Published $MESSAGE_COUNT messages to $TOPIC_NAME"
 ```
 
 # To-Do
